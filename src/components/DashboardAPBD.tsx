@@ -2,101 +2,103 @@ import React, { useState } from "react";
 import { TrendingUp, ArrowDownRight, ArrowUpRight, ShieldCheck, HelpCircle, Landmark, Coins, Briefcase } from "lucide-react";
 import { APBDData, APBDItem } from "../types";
 
-// Realistic APBD Data for Kota Pangkalpinang (around Rp 1.08 Triliun)
+// Realistic APBD Data for Kota Pangkalpinang (Rp 1,002 T Pendapatan, Rp 1,056 T Belanja)
 const KOTA_PANGKALPINANG_APBD: APBDData = {
-  year: 2026,
+  year: 2024,
   revenue: {
-    total: 1050, // Miliar Rupiah
+    total: 1002.4, // Miliar Rupiah
     items: [
       {
         category: "Pajak Daerah",
-        value: 125,
-        percentage: 11.9,
-        details: "Penerimaan dari Pajak Bumi & Bangunan (PBB), BPHTB, Pajak Restoran, Hotel, Penerangan Jalan, Reklame, dll.",
+        value: 134.8,
+        percentage: 13.4,
+        details: "Penerimaan Pajak Daerah Kota Pangkalpinang, meliputi Pajak Bumi dan Bangunan (PBB-P2), Bea Perolehan Hak atas Tanah dan Bangunan (BPHTB), Pajak Barang dan Jasa Tertentu (PBJT), Reklame, Air Tanah, dan Sarang Burung Walet.",
         subItems: [
-          { name: "Pajak Bumi dan Bangunan (PBB-P2)", value: 35 },
-          { name: "BPHTB (Bea Perolehan Hak Tanah & Bangunan)", value: 40 },
-          { name: "Pajak Barang & Jasa Tertentu (Restoran/Hotel/dll)", value: 32 },
-          { name: "Pajak Reklame & Air Tanah", value: 18 },
+          { name: "Pajak Bumi & Bangunan (PBB-P2)", value: 35.0 },
+          { name: "Bea Perolehan Hak Tanah & Bangunan (BPHTB)", value: 45.0 },
+          { name: "Pajak Barang & Jasa Tertentu (PBJT)", value: 35.0 },
+          { name: "Pajak Reklame, Air Tanah & Sarang Burung Walet", value: 19.8 }
         ]
       },
       {
         category: "Retribusi Daerah",
-        value: 25,
-        percentage: 2.4,
-        details: "Penerimaan dari pelayanan pasar, parkir tepi jalan umum, kebersihan, perizinan tertentu, dan pelayanan kesehatan.",
+        value: 20.4,
+        percentage: 2.0,
+        details: "Penerimaan Retribusi Daerah Kota Pangkalpinang, bersumber dari Retribusi Jasa Umum, Retribusi Jasa Usaha, dan Retribusi Perizinan Tertentu.",
         subItems: [
-          { name: "Retribusi Jasa Umum", value: 12 },
-          { name: "Retribusi Jasa Usaha", value: 8 },
-          { name: "Retribusi Perizinan Tertentu", value: 5 },
+          { name: "Retribusi Jasa Umum (Parkir, Kebersihan, dll)", value: 10.4 },
+          { name: "Retribusi Jasa Usaha (Pasar, Terminal, dll)", value: 6.0 },
+          { name: "Retribusi Perizinan Tertentu (PBG/IMB, dll)", value: 4.0 }
         ]
       },
       {
-        category: "Dana Transfer Pusat",
-        value: 820,
-        percentage: 78.1,
-        details: "Dana Alokasi Umum (DAU), Dana Alokasi Khusus (DAK), dan Dana Bagi Hasil (DBH) dari Pemerintah Pusat.",
+        category: "Dana Transfer Pemerintah",
+        value: 813.1,
+        percentage: 81.1,
+        details: "Dana perimbangan transfer dari Pemerintah Pusat (DAU, DAK, DBH) serta Dana Transfer Antar Daerah berupa Bagi Hasil Pajak Provinsi dari Pemerintah Provinsi Kepulauan Bangka Belitung.",
         subItems: [
-          { name: "Dana Alokasi Umum (DAU)", value: 510 },
-          { name: "Dana Alokasi Khusus (DAK) Fisik & Non-Fisik", value: 210 },
-          { name: "Dana Bagi Hasil (DBH) Pajak/Sumber Daya", value: 100 },
+          { name: "Dana Alokasi Umum (DAU) Pusat", value: 532.0 },
+          { name: "Dana Alokasi Khusus (DAK) Pusat", value: 146.0 },
+          { name: "Dana Bagi Hasil (DBH) Pusat", value: 70.0 },
+          { name: "Bagi Hasil Pajak Provinsi Bangka Belitung", value: 65.1 }
         ]
       },
       {
-        category: "Lain-lain Pendapatan yang Sah",
-        value: 80,
-        percentage: 7.6,
-        details: "Pendapatan hibah, dana darurat, dan bagi hasil pajak dari pemerintah provinsi Bangka Belitung.",
+        category: "Lain-lain Pendapatan Sah",
+        value: 34.1,
+        percentage: 3.5,
+        details: "Penerimaan daerah lainnya yang sah, bersumber dari Hasil Pengelolaan Kekayaan Daerah yang Dipisahkan, Lain-lain PAD yang Sah, Pendapatan Hibah, serta Dana Darurat.",
         subItems: [
-          { name: "Bagi Hasil Pajak Provinsi", value: 65 },
-          { name: "Pendapatan Hibah & Dana Lainnya", value: 15 },
+          { name: "Hasil Pengelolaan Kekayaan Daerah Dipisahkan", value: 5.1 },
+          { name: "Lain-lain PAD yang Sah", value: 24.0 },
+          { name: "Pendapatan Hibah & Dana Darurat", value: 5.0 }
         ]
       }
     ]
   },
   expenditure: {
-    total: 1080, // Miliar Rupiah
+    total: 1056.2, // Miliar Rupiah
     items: [
       {
         category: "Belanja Operasi",
-        value: 810,
-        percentage: 75.0,
-        details: "Pengeluaran rutin untuk gaji pegawai (ASN/P3K), belanja barang dan jasa dinas, hibah, serta bantuan sosial masyarakat.",
+        value: 867.2,
+        percentage: 82.1,
+        details: "Pengeluaran rutin daerah untuk menunjang kegiatan operasional pemerintahan sehari-hari, meliputi Belanja Pegawai (gaji, tunjangan ASN & P3K), Belanja Barang & Jasa, Belanja Subsidi, Belanja Hibah, dan Belanja Bantuan Sosial.",
         subItems: [
-          { name: "Belanja Pegawai (Gaji & Tunjangan)", value: 420 },
-          { name: "Belanja Barang & Jasa Operasional", value: 310 },
-          { name: "Belanja Hibah & Bantuan Sosial", value: 80 },
+          { name: "Belanja Pegawai (Gaji & Tunjangan)", value: 412.0 },
+          { name: "Belanja Barang & Jasa Operasional", value: 365.0 },
+          { name: "Belanja Hibah & Bantuan Sosial", value: 90.2 }
         ]
       },
       {
         category: "Belanja Modal",
-        value: 190,
-        percentage: 17.6,
-        details: "Pembangunan aset tetap daerah seperti infrastruktur jalan kota, jembatan, renovasi sekolah, gedung layanan, dan fasilitas umum.",
+        value: 172.0,
+        percentage: 16.3,
+        details: "Pengeluaran daerah untuk pembangunan aset tetap yang memberikan manfaat jangka panjang bagi publik, seperti pembangunan infrastruktur jalan, jembatan, gedung sekolah, puskesmas, dan fasilitas perkantoran umum.",
         subItems: [
-          { name: "Pembangunan Jalan & Jembatan", value: 85 },
-          { name: "Sarana Pendidikan & Kesehatan", value: 65 },
-          { name: "Peralatan, Mesin & Teknologi Informasi", value: 40 },
+          { name: "Pembangunan Jalan, Jembatan & Irigasi", value: 75.0 },
+          { name: "Sarana Prasarana Pendidikan & Kesehatan", value: 57.0 },
+          { name: "Peralatan Gedung, Mesin & Sarpras Kantor", value: 40.0 }
         ]
       },
       {
         category: "Belanja Tidak Terduga",
-        value: 15,
-        percentage: 1.4,
-        details: "Anggaran darurat untuk penanggulangan bencana alam, bantuan sosial darurat luar biasa, dan kebutuhan mendesak yang belum direncanakan.",
+        value: 12.0,
+        percentage: 1.1,
+        details: "Anggaran darurat daerah yang disediakan untuk mengantisipasi kejadian luar biasa, penanggulangan bencana alam, tanggap darurat, maupun kebutuhan mendesak lainnya yang belum dianggarkan.",
         subItems: [
-          { name: "Tanggap Darurat Kebencanaan", value: 10 },
-          { name: "Belanja Mendesak Lainnya", value: 5 },
+          { name: "Tanggap Darurat Kebencanaan Alam/Sosial", value: 8.0 },
+          { name: "Bantuan Sosial Darurat & Kebutuhan Mendesak", value: 4.0 }
         ]
       },
       {
         category: "Belanja Transfer",
-        value: 65,
-        percentage: 6.0,
-        details: "Bagi hasil pendapatan ke kelurahan-kelurahan di Kota Pangkalpinang serta bantuan keuangan khusus.",
+        value: 5.0,
+        percentage: 0.5,
+        details: "Pengeluaran berupa transfer bagi hasil pendapatan dan bantuan keuangan ke kelurahan-kelurahan di wilayah Kota Pangkalpinang demi percepatan pembangunan lokal.",
         subItems: [
-          { name: "Alokasi Dana Kelurahan", value: 45 },
-          { name: "Bantuan Keuangan Khusus", value: 20 },
+          { name: "Alokasi Dana Kelurahan (ADK)", value: 3.0 },
+          { name: "Bantuan Keuangan Khusus Kelurahan", value: 2.0 }
         ]
       }
     ]
@@ -254,7 +256,7 @@ export default function DashboardAPBD() {
             </div>
           </div>
           <div className="mt-4">
-            <span className="text-2xl font-extrabold text-slate-900">Rp 1,05 Triliun</span>
+            <span className="text-2xl font-extrabold text-slate-900">Rp 1,00 Triliun</span>
             <div className="mt-1.5 flex items-center gap-1.5 text-xs font-medium text-emerald-600">
               <ArrowUpRight className="h-3.5 w-3.5" />
               <span>Target terealisasi 98.4%</span>
@@ -270,7 +272,7 @@ export default function DashboardAPBD() {
             </div>
           </div>
           <div className="mt-4">
-            <span className="text-2xl font-extrabold text-slate-900">Rp 1,08 Triliun</span>
+            <span className="text-2xl font-extrabold text-slate-900">Rp 1,05 Triliun</span>
             <div className="mt-1.5 flex items-center gap-1.5 text-xs font-medium text-amber-600">
               <ArrowDownRight className="h-3.5 w-3.5" />
               <span>Penyaluran berjalan 54.2%</span>
@@ -286,7 +288,7 @@ export default function DashboardAPBD() {
             </div>
           </div>
           <div className="mt-4">
-            <span className="text-2xl font-extrabold text-slate-900">Rp 125 Miliar</span>
+            <span className="text-2xl font-extrabold text-slate-900">Rp 134,8 Miliar</span>
             <div className="mt-1.5 flex items-center gap-1.5 text-xs font-medium text-emerald-600">
               <ArrowUpRight className="h-3.5 w-3.5" />
               <span>Kenaikan 8.5% YoY</span>
