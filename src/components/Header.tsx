@@ -11,6 +11,7 @@ export default function Header({ activeTab, setActiveTab }: HeaderProps) {
     { id: "apbd", label: "Dashboard APBD" },
     { id: "simulator", label: "Simulator Pajak" },
     { id: "layanan", label: "Layanan Publik" },
+    { id: "inovasi", label: "Inovasi & Unduhan" },
     { id: "asisten", label: "Asisten FinAI" },
     { id: "profil", label: "Profil Lembaga" },
   ];

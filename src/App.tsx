@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import DashboardAPBD from "./components/DashboardAPBD";
 import TaxSimulator from "./components/TaxSimulator";
 import PublicServices from "./components/PublicServices";
+import InnovationDownloads from "./components/InnovationDownloads";
 import AiAssistant from "./components/AiAssistant";
 import OrgProfile from "./components/OrgProfile";
 import Footer from "./components/Footer";
@@ -20,6 +21,8 @@ export default function App() {
         return <TaxSimulator />;
       case "layanan":
         return <PublicServices />;
+      case "inovasi":
+        return <InnovationDownloads />;
       case "asisten":
         return <AiAssistant />;
       case "profil":
