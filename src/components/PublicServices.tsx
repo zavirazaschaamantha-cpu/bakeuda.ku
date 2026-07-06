@@ -132,10 +132,10 @@ export default function PublicServices() {
           <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/95 to-slate-950/80" />
         </div>
         <div className="relative z-10 p-6 md:p-8 max-w-2xl">
-          <span className="font-mono text-xs font-bold tracking-widest text-secondary uppercase">
+          <span className="font-mono text-xs font-bold tracking-widest text-yellow uppercase bg-yellow/10 px-3 py-1 rounded-full backdrop-blur-xs inline-block mb-2">
             Layanan Elektronik & Administrasi Pajak
           </span>
-          <h2 className="mt-2 text-xl font-extrabold text-white leading-tight sm:text-2xl">
+          <h2 className="mt-1 text-xl font-extrabold text-white leading-tight sm:text-2xl">
             Pusat Pelayanan Publik BKD Kota Pangkalpinang
           </h2>
           <p className="mt-2 text-xs text-slate-300 leading-relaxed font-medium">

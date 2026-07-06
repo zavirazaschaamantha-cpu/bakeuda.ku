@@ -17,6 +17,7 @@ export default function Header({ activeTab, setActiveTab }: HeaderProps) {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b-4 border-secondary bg-primary text-white shadow-md">
+      <div className="h-1 bg-yellow w-full" />
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         {/* Brand Logo & Title */}
         <div className="flex items-center gap-3">

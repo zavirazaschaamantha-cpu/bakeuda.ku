@@ -127,7 +127,7 @@ export default function AiAssistant() {
       <div className="lg:col-span-4 space-y-6">
         <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm space-y-4">
           <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
-            <Sparkles className="h-5 w-5 text-primary" />
+            <Sparkles className="h-5 w-5 text-yellow" />
             <h3 className="font-sans text-base font-extrabold text-slate-900">Topik Populer</h3>
           </div>
           <p className="text-xs text-slate-500 leading-relaxed">
@@ -152,7 +152,7 @@ export default function AiAssistant() {
           <div className="absolute top-0 right-0 p-4 opacity-5">
             <Bot className="h-24 w-24" />
           </div>
-          <h4 className="font-sans text-sm font-extrabold text-secondary uppercase tracking-widest">Informasi Keamanan</h4>
+          <h4 className="font-sans text-sm font-extrabold text-yellow uppercase tracking-widest">Informasi Keamanan</h4>
           <p className="mt-2 text-xs text-slate-300 leading-relaxed font-medium">
             Asisten FinAI ini ditenagai kecerdasan buatan Gemini AI. Semua percakapan diproses secara aman server-side tanpa mengekspos data pribadi Anda ke luar jaringan sistem. Pastikan untuk tidak menginputkan data sensitif seperti password perbankan Anda.
           </p>

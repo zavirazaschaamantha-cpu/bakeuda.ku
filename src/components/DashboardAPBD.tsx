@@ -118,11 +118,11 @@ function DonutChart({ items, selectedItem, onSelect, getProgressColor }: DonutCh
   let accumulatedPercentage = 0;
   
   const getHexColor = (colorClass: string) => {
-    if (colorClass.includes("bg-primary")) return "#003366";
-    if (colorClass.includes("bg-slate-600")) return "#475569";
-    if (colorClass.includes("bg-secondary")) return "#f4b400";
+    if (colorClass.includes("bg-primary")) return "#0052cc";
+    if (colorClass.includes("bg-yellow")) return "#f59e0b";
+    if (colorClass.includes("bg-secondary")) return "#10b981";
     if (colorClass.includes("bg-indigo-600")) return "#4f46e5";
-    return "#3b82f6";
+    return "#475569";
   };
 
   return (
@@ -212,7 +212,7 @@ export default function DashboardAPBD() {
   };
 
   const getProgressColorClass = (index: number) => {
-    const colors = ["bg-primary", "bg-slate-600", "bg-secondary", "bg-indigo-600"];
+    const colors = ["bg-primary", "bg-yellow", "bg-secondary", "bg-indigo-600", "bg-slate-600"];
     return colors[index % colors.length];
   };
 
@@ -223,7 +223,7 @@ export default function DashboardAPBD() {
         {/* Background Image with elegant overlay */}
         <div className="absolute inset-0 z-0">
           <img 
-            src="/src/assets/images/hero_pangkalpinang_bkd_1783308871752.jpg" 
+            src="/src/assets/images/kantor_bkd_pangkalpinang_1783322183344.jpg" 
             alt="Kantor BKD Kota Pangkalpinang" 
             className="w-full h-full object-cover object-center opacity-30 mix-blend-luminosity"
             referrerPolicy="no-referrer"
@@ -232,10 +232,10 @@ export default function DashboardAPBD() {
         </div>
         
         <div className="relative z-10 max-w-2xl p-8">
-          <span className="font-mono text-xs font-bold tracking-widest text-secondary uppercase">
+          <span className="font-mono text-xs font-bold tracking-widest text-yellow uppercase bg-yellow/10 px-3 py-1 rounded-full backdrop-blur-xs inline-block mb-2">
             Transparansi Anggaran Daerah
           </span>
-          <h2 className="mt-2 text-2xl font-extrabold tracking-tight sm:text-3xl text-white">
+          <h2 className="mt-1 text-2xl font-extrabold tracking-tight sm:text-3xl text-white">
             APBD Kota Pangkalpinang Tahun {data.year}
           </h2>
           <p className="mt-3 text-sm text-slate-300 leading-relaxed">
@@ -281,7 +281,7 @@ export default function DashboardAPBD() {
         <div className="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm transition-all duration-200 hover:shadow-md">
           <div className="flex items-center justify-between">
             <span className="text-sm font-semibold text-slate-500">Pajak Daerah (PAD)</span>
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-50 text-secondary">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-yellow-light text-yellow">
               <Landmark className="h-5 w-5" />
             </div>
           </div>

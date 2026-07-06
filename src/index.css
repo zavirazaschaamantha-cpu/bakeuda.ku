@@ -5,9 +5,11 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
   
-  --color-primary: #003366;
-  --color-secondary: #f4b400;
-  --color-accent: #e6f0ff;
+  --color-primary: #0052cc;
+  --color-secondary: #10b981;
+  --color-accent: #ecfdf5;
+  --color-yellow: #f59e0b;
+  --color-yellow-light: #fef3c7;
   --color-text-main: #1a202c;
   --color-text-muted: #4a5568;
   --color-bg-body: #f8fafc;

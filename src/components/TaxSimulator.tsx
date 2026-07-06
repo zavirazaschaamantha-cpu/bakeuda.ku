@@ -136,7 +136,7 @@ export default function TaxSimulator() {
         
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between w-full p-6 md:p-8 gap-6">
           <div className="flex items-center gap-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-secondary shadow-sm backdrop-blur-xs">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-yellow shadow-sm backdrop-blur-xs">
               <Calculator className="h-6 w-6" />
             </div>
             <div>
@@ -323,7 +323,7 @@ export default function TaxSimulator() {
                     PBB Terhutang Estimasi
                   </span>
                   <div className="mt-2 flex items-baseline justify-between">
-                    <span className="text-2xl font-extrabold text-secondary">
+                    <span className="text-2xl font-extrabold text-yellow">
                       {formatRupiah(pbbResult.pbbTerhutang)}
                     </span>
                     <span className="text-3xs text-slate-300 font-mono">/ Tahun</span>
@@ -444,7 +444,7 @@ export default function TaxSimulator() {
                     BPHTB Terhutang Estimasi
                   </span>
                   <div className="mt-2 flex items-baseline justify-between">
-                    <span className="text-2xl font-extrabold text-secondary">
+                    <span className="text-2xl font-extrabold text-yellow">
                       {formatRupiah(bphtbResult.bphtbTerhutang)}
                     </span>
                     <span className="text-3xs text-slate-300 font-mono">/ Bayar Sekali</span>

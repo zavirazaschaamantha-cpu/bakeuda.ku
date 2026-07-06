@@ -34,12 +34,36 @@ export default function OrgProfile() {
 
   return (
     <div id="org-profile" className="space-y-8 animate-fade-in">
+      {/* Kantor BKD Pangkalpinang Hero Card */}
+      <div className="relative overflow-hidden rounded-3xl bg-slate-900 text-white shadow-xl min-h-[220px] flex items-center">
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="/src/assets/images/kantor_bkd_pangkalpinang_1783322183344.jpg" 
+            alt="Kantor BKD Kota Pangkalpinang" 
+            className="w-full h-full object-cover object-center opacity-30 mix-blend-luminosity"
+            referrerPolicy="no-referrer"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/95 to-slate-950/80" />
+        </div>
+        <div className="relative z-10 p-6 md:p-8 max-w-2xl space-y-3">
+          <span className="font-mono text-3xs font-black tracking-widest text-yellow bg-white/10 px-2.5 py-1 rounded-full backdrop-blur-xs inline-block">
+            PROFIL INSTANSI RESMI
+          </span>
+          <h2 className="text-xl font-black text-white leading-tight sm:text-2xl md:text-3xl">
+            Badan Keuangan Daerah Kota Pangkalpinang
+          </h2>
+          <p className="text-xs text-slate-300 leading-relaxed font-medium">
+            Selamat datang di Kantor BKD Kota Pangkalpinang. Sebagai instansi pengelola keuangan dan barang milik daerah, kami berkomitmen untuk melayani masyarakat secara profesional, transparan, and akuntabel demi terwujudnya Kota Pangkalpinang yang sejahtera.
+          </p>
+        </div>
+      </div>
+
       {/* Visi Misi Bento Layout */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
         {/* Vision Card */}
         <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm lg:col-span-5 flex flex-col justify-between">
           <div className="space-y-4">
-            <span className="p-3 rounded-2xl bg-accent text-primary inline-block shadow-3xs">
+            <span className="p-3 rounded-2xl bg-yellow-light text-yellow inline-block shadow-3xs">
               <Award className="h-6 w-6" />
             </span>
             <div className="space-y-2">
@@ -145,25 +169,32 @@ export default function OrgProfile() {
           </div>
         </div>
 
-        {/* Mock Map Layout */}
-        <div className="rounded-2xl bg-slate-100 overflow-hidden border border-slate-200 relative min-h-[250px] flex items-center justify-center text-center p-6">
-          {/* Stylized background representing map terrain */}
-          <div className="absolute inset-0 opacity-40 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] [background-size:16px_16px] bg-slate-50" />
-          <div className="relative z-10 space-y-3">
-            <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-primary text-white shadow-md">
-              <MapPin className="h-5 w-5" />
+        {/* Mock Map / Building Photo Card */}
+        <div className="rounded-2xl bg-slate-950 overflow-hidden border border-slate-200 relative min-h-[250px] flex items-center justify-center text-center p-6 shadow-3xs group">
+          <div className="absolute inset-0 z-0">
+            <img 
+              src="/src/assets/images/kantor_bkd_pangkalpinang_1783322183344.jpg" 
+              alt="Gedung BKD Kota Pangkalpinang" 
+              className="w-full h-full object-cover object-center opacity-40 group-hover:scale-105 transition duration-500"
+              referrerPolicy="no-referrer"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/80 to-slate-950/40" />
+          </div>
+          <div className="relative z-10 space-y-4">
+            <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-full bg-yellow text-slate-900 shadow-lg">
+              <MapPin className="h-5.5 w-5.5" />
             </div>
             <div>
-              <span className="text-xs font-extrabold text-slate-900 block">Kawasan Perkantoran Walikota</span>
-              <span className="text-3xs text-slate-500 font-semibold block mt-1">Samping Alun-Alun Taman Merdeka Pangkalpinang</span>
+              <span className="text-sm font-black text-white block drop-shadow-sm">Gedung Utama BKD Pangkalpinang</span>
+              <span className="text-2xs text-slate-300 font-bold block mt-1 drop-shadow-xs">Jl. Merdeka No. 4, Samping Alun-Alun Taman Merdeka</span>
             </div>
             <a
               href="https://maps.google.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-2xs font-extrabold text-primary hover:text-primary/80 bg-white border border-slate-200/80 rounded-lg px-3 py-1.5 shadow-3xs"
+              className="inline-flex items-center gap-1.5 text-xs font-black text-primary hover:text-primary/95 bg-white border border-slate-200 rounded-xl px-4 py-2 shadow-md hover:scale-105 active:scale-95 transition"
             >
-              Buka Google Maps <ChevronRight className="h-3 w-3" />
+              Petunjuk Arah Google Maps <ChevronRight className="h-3.5 w-3.5" />
             </a>
           </div>
         </div>
