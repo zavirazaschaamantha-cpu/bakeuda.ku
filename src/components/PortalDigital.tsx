@@ -24,7 +24,9 @@ import {
   TrendingUp, 
   Activity,
   Send,
-  UserCheck
+  UserCheck,
+  Eye,
+  EyeOff
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
@@ -133,7 +135,21 @@ const INITIAL_EMPLOYEES: EmployeeAccount[] = [
   }
 ];
 
-export default function PortalDigital() {
+interface PortalDigitalProps {
+  activeUser?: CitizenAccount | EmployeeAccount | null;
+  setActiveUser?: (user: CitizenAccount | EmployeeAccount | null) => void;
+  onLoginSuccess?: (user: CitizenAccount | EmployeeAccount | null) => void;
+  onGuestAccess?: () => void;
+  showGuestButton?: boolean;
+}
+
+export default function PortalDigital({ 
+  activeUser: propActiveUser, 
+  setActiveUser: propSetActiveUser,
+  onLoginSuccess,
+  onGuestAccess,
+  showGuestButton = false
+}: PortalDigitalProps) {
   // Authentication states
   const [isLoginView, setIsLoginView] = useState<boolean>(true);
   const [roleSelection, setRoleSelection] = useState<"masyarakat" | "karyawan">("masyarakat");
@@ -141,6 +157,9 @@ export default function PortalDigital() {
   // Input fields for Login
   const [loginIdentifier, setLoginIdentifier] = useState<string>(""); // NIK or NIP
   const [loginPassword, setLoginPassword] = useState<string>("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showRegPassword, setShowRegPassword] = useState<boolean>(false);
+  const [showEmpRegPassword, setShowEmpRegPassword] = useState<boolean>(false);
   
   // Input fields for Register (Masyarakat)
   const [regNik, setRegNik] = useState<string>("");
@@ -169,10 +188,22 @@ export default function PortalDigital() {
     return local ? JSON.parse(local) : INITIAL_EMPLOYEES;
   });
 
-  const [activeUser, setActiveUser] = useState<CitizenAccount | EmployeeAccount | null>(() => {
+  const [localActiveUser, setLocalActiveUser] = useState<CitizenAccount | EmployeeAccount | null>(() => {
     const local = localStorage.getItem("bkd_portal_active_user");
     return local ? JSON.parse(local) : null;
   });
+
+  const activeUser = propActiveUser !== undefined ? propActiveUser : localActiveUser;
+  const setActiveUser = (user: CitizenAccount | EmployeeAccount | null) => {
+    if (propSetActiveUser) {
+      propSetActiveUser(user);
+    } else {
+      setLocalActiveUser(user);
+    }
+    if (onLoginSuccess) {
+      onLoginSuccess(user);
+    }
+  };
 
   // Master Complaints List for Employees
   const [allComplaints, setAllComplaints] = useState<TaxComplaint[]>(() => {
@@ -253,23 +284,31 @@ export default function PortalDigital() {
     setSuccessMsg("");
 
     if (!loginIdentifier || !loginPassword) {
-      setErrorMsg("Mohon masukkan NIK/NIP dan Kata Sandi Anda.");
+      setErrorMsg("Mohon masukkan NIK/NIP atau Email dan Kata Sandi Anda.");
       return;
     }
 
+    const trimmedIdentifier = loginIdentifier.trim().toLowerCase();
+
     if (roleSelection === "masyarakat") {
-      const citizen = citizens.find(c => c.nik === loginIdentifier.trim());
+      const citizen = citizens.find(c => 
+        c.nik === trimmedIdentifier || 
+        c.email.toLowerCase() === trimmedIdentifier
+      );
       if (!citizen) {
-        setErrorMsg("NIK Anda tidak terdaftar. Silakan buat akun terlebih dahulu.");
+        setErrorMsg("NIK atau Alamat Email Anda tidak terdaftar. Silakan buat akun terlebih dahulu.");
         return;
       }
       // Simple validation (password is checked or defaulted)
       setActiveUser(citizen);
       setSuccessMsg(`Selamat datang kembali, ${citizen.fullName}!`);
     } else {
-      const employee = employees.find(emp => emp.nip === loginIdentifier.trim());
+      const employee = employees.find(emp => 
+        emp.nip === trimmedIdentifier || 
+        emp.email.toLowerCase() === trimmedIdentifier
+      );
       if (!employee) {
-        setErrorMsg("NIP Pegawai tidak terdaftar dalam database BKD Kota Pangkalpinang.");
+        setErrorMsg("NIP atau Email Pegawai tidak terdaftar dalam database BKD Kota Pangkalpinang.");
         return;
       }
       setActiveUser(employee);
@@ -699,7 +738,7 @@ export default function PortalDigital() {
                   
                   <div className="space-y-1.5">
                     <label className="text-4xs font-black text-slate-500 uppercase tracking-wider block">
-                      {roleSelection === "masyarakat" ? "Nomor Induk Kependudukan (NIK)" : "Nomor Induk Pegawai (NIP)"}
+                      {roleSelection === "masyarakat" ? "Nomor Induk Kependudukan (NIK) atau Email" : "Nomor Induk Pegawai (NIP) atau Email Dinas"}
                     </label>
                     <div className="relative">
                       <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400">
@@ -707,9 +746,9 @@ export default function PortalDigital() {
                       </span>
                       <input
                         type="text"
-                        placeholder={roleSelection === "masyarakat" ? "Masukkan NIK 16 digit Anda" : "Masukkan NIP 18 digit resmi BKD"}
+                        placeholder={roleSelection === "masyarakat" ? "Masukkan NIK atau Alamat Email Anda" : "Masukkan NIP atau Email Dinas BKD"}
                         value={loginIdentifier}
-                        onChange={(e) => setLoginIdentifier(e.target.value.replace(/\D/g, ''))}
+                        onChange={(e) => setLoginIdentifier(e.target.value)}
                         className="w-full bg-slate-50 hover:bg-slate-50/50 focus:bg-white border border-slate-200 focus:border-[#0042A5] rounded-xl pl-11 pr-4 py-3 text-xs font-bold outline-none transition"
                         required
                       />
@@ -723,13 +762,21 @@ export default function PortalDigital() {
                         <Lock className="h-4.5 w-4.5" />
                       </span>
                       <input
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         placeholder="••••••••"
                         value={loginPassword}
                         onChange={(e) => setLoginPassword(e.target.value)}
-                        className="w-full bg-slate-50 hover:bg-slate-50/50 focus:bg-white border border-slate-200 focus:border-[#0042A5] rounded-xl pl-11 pr-4 py-3 text-xs font-bold outline-none transition"
+                        className="w-full bg-slate-50 hover:bg-slate-50/50 focus:bg-white border border-slate-200 focus:border-[#0042A5] rounded-xl pl-11 pr-12 py-3 text-xs font-bold outline-none transition"
                         required
                       />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer p-1 transition"
+                        title={showPassword ? "Sembunyikan password" : "Tampilkan password"}
+                      >
+                        {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                      </button>
                     </div>
                   </div>
 
@@ -739,6 +786,16 @@ export default function PortalDigital() {
                   >
                     Masuk Ke Portal Aman <ArrowRight className="h-4 w-4" />
                   </button>
+
+                  {showGuestButton && onGuestAccess && (
+                    <button
+                      type="button"
+                      onClick={onGuestAccess}
+                      className="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 py-3 rounded-xl text-xs uppercase tracking-wider font-black transition shadow-3xs cursor-pointer flex items-center justify-center gap-2 border border-slate-200 mt-2 active:scale-98"
+                    >
+                      🔓 Masuk Sebagai Tamu (Akses Publik)
+                    </button>
+                  )}
 
                 </form>
               ) : (
@@ -812,14 +869,24 @@ export default function PortalDigital() {
 
                     <div className="space-y-1.5">
                       <label className="text-4xs font-black text-slate-500 uppercase tracking-wider block">Kata Sandi Baru</label>
-                      <input
-                        type="password"
-                        placeholder="Min. 6 Karakter Aman"
-                        value={regPassword}
-                        onChange={(e) => setRegPassword(e.target.value)}
-                        className="w-full bg-slate-50 focus:bg-white border border-slate-200 focus:border-[#0042A5] rounded-xl px-3.5 py-3 text-xs font-bold outline-none transition"
-                        required
-                      />
+                      <div className="relative">
+                        <input
+                          type={showRegPassword ? "text" : "password"}
+                          placeholder="Min. 6 Karakter Aman"
+                          value={regPassword}
+                          onChange={(e) => setRegPassword(e.target.value)}
+                          className="w-full bg-slate-50 focus:bg-white border border-slate-200 focus:border-[#0042A5] rounded-xl pl-3.5 pr-12 py-3 text-xs font-bold outline-none transition"
+                          required
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowRegPassword(!showRegPassword)}
+                          className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer p-1 transition"
+                          title={showRegPassword ? "Sembunyikan password" : "Tampilkan password"}
+                        >
+                          {showRegPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                        </button>
+                      </div>
                     </div>
 
                     <button
@@ -901,14 +968,24 @@ export default function PortalDigital() {
                       </div>
                       <div className="space-y-1.5">
                         <label className="text-4xs font-black text-slate-500 uppercase tracking-wider block">Kata Sandi Akun</label>
-                        <input
-                          type="password"
-                          placeholder="••••••••"
-                          value={regEmpPassword}
-                          onChange={(e) => setRegEmpPassword(e.target.value)}
-                          className="w-full bg-slate-50 focus:bg-white border border-slate-200 focus:border-[#0042A5] rounded-xl px-3.5 py-3 text-xs font-bold outline-none transition"
-                          required
-                        />
+                        <div className="relative">
+                          <input
+                            type={showEmpRegPassword ? "text" : "password"}
+                            placeholder="••••••••"
+                            value={regEmpPassword}
+                            onChange={(e) => setRegEmpPassword(e.target.value)}
+                            className="w-full bg-slate-50 focus:bg-white border border-slate-200 focus:border-[#0042A5] rounded-xl pl-3.5 pr-12 py-3 text-xs font-bold outline-none transition"
+                            required
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setShowEmpRegPassword(!showEmpRegPassword)}
+                            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer p-1 transition"
+                            title={showEmpRegPassword ? "Sembunyikan password" : "Tampilkan password"}
+                          >
+                            {showEmpRegPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                          </button>
+                        </div>
                       </div>
                     </div>
 
