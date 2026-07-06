@@ -14,6 +14,7 @@ export default function Header({ activeTab, setActiveTab }: HeaderProps) {
     { id: "inovasi", label: "Inovasi & Unduhan" },
     { id: "asisten", label: "Asisten FinAI" },
     { id: "profil", label: "Profil Lembaga" },
+    { id: "portal", label: "Portal Digital" },
   ];
 
   // Get current date in Indonesian format

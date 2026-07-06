@@ -6,6 +6,7 @@ import PublicServices from "./components/PublicServices";
 import InnovationDownloads from "./components/InnovationDownloads";
 import AiAssistant from "./components/AiAssistant";
 import OrgProfile from "./components/OrgProfile";
+import PortalDigital from "./components/PortalDigital";
 import Footer from "./components/Footer";
 import { Landmark, ArrowRight, ShieldCheck, Heart } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
@@ -27,6 +28,8 @@ export default function App() {
         return <AiAssistant />;
       case "profil":
         return <OrgProfile />;
+      case "portal":
+        return <PortalDigital />;
       default:
         return <DashboardAPBD />;
     }
