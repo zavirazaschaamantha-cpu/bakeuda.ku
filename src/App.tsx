@@ -7,6 +7,7 @@ import AiAssistant from "./components/AiAssistant";
 import OrgProfile from "./components/OrgProfile";
 import Footer from "./components/Footer";
 import { Landmark, ArrowRight, ShieldCheck, Heart } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<string>("apbd");
@@ -36,7 +37,12 @@ export default function App() {
       {/* Main Container */}
       <main className="flex-1 mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-12">
         {/* Welcome Announcement Alert Banner */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-slate-200/80 bg-white p-4.5 shadow-3xs">
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-slate-200/80 bg-white p-4.5 shadow-3xs"
+        >
           <div className="flex items-center gap-3">
             <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent text-primary">
               <ShieldCheck className="h-5 w-5" />
@@ -48,15 +54,25 @@ export default function App() {
           </div>
           <button
             onClick={() => setActiveTab("layanan")}
-            className="flex items-center gap-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 px-4 py-2 text-xs font-bold text-slate-800 transition shadow-3xs shrink-0 self-start sm:self-auto cursor-pointer"
+            className="flex items-center gap-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 px-4 py-2 text-xs font-bold text-slate-800 transition shadow-3xs shrink-0 self-start sm:self-auto cursor-pointer active:scale-95"
           >
-            Periksa NOP Anda <ArrowRight className="h-3.5 w-3.5 text-slate-500" />
+            Periksa NOP Anda <ArrowRight className="h-3.5 w-3.5 text-slate-500 animate-pulse" />
           </button>
-        </div>
+        </motion.div>
 
-        {/* Dynamic Tab Panel */}
+        {/* Dynamic Tab Panel with Page Transitions */}
         <div className="min-h-[500px]">
-          {renderActiveTabContent()}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.35, ease: "easeInOut" }}
+            >
+              {renderActiveTabContent()}
+            </motion.div>
+          </AnimatePresence>
         </div>
       </main>
 

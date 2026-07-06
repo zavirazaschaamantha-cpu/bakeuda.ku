@@ -103,6 +103,88 @@ const KOTA_PANGKALPINANG_APBD: APBDData = {
   }
 };
 
+interface DonutChartProps {
+  items: APBDItem[];
+  selectedItem: APBDItem;
+  onSelect: (item: APBDItem) => void;
+  getProgressColor: (index: number) => string;
+}
+
+function DonutChart({ items, selectedItem, onSelect, getProgressColor }: DonutChartProps) {
+  const radius = 55;
+  const strokeWidth = 12;
+  const circumference = 2 * Math.PI * radius;
+  
+  let accumulatedPercentage = 0;
+  
+  const getHexColor = (colorClass: string) => {
+    if (colorClass.includes("bg-primary")) return "#003366";
+    if (colorClass.includes("bg-slate-600")) return "#475569";
+    if (colorClass.includes("bg-secondary")) return "#f4b400";
+    if (colorClass.includes("bg-indigo-600")) return "#4f46e5";
+    return "#3b82f6";
+  };
+
+  return (
+    <div className="relative flex flex-col items-center justify-center py-5 bg-slate-50/30 rounded-2xl border border-slate-100/80 mb-5 shadow-3xs overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 bg-radial-gradient from-white to-transparent opacity-40 pointer-events-none" />
+      
+      <svg width="160" height="160" viewBox="0 0 160 160" className="transform -rotate-90 relative z-10">
+        {/* Background track circle */}
+        <circle
+          cx="80"
+          cy="80"
+          r={radius}
+          fill="transparent"
+          stroke="#f1f5f9"
+          strokeWidth={strokeWidth}
+        />
+        {items.map((item, idx) => {
+          const itemPercentage = item.percentage;
+          const strokeLength = (itemPercentage / 100) * circumference;
+          const strokeOffset = circumference - strokeLength;
+          
+          const rotationAngle = (accumulatedPercentage / 100) * 360;
+          accumulatedPercentage += itemPercentage;
+          
+          const isSelected = selectedItem.category === item.category;
+          const colorClass = getProgressColor(idx);
+          const strokeColor = getHexColor(colorClass);
+          
+          return (
+            <circle
+              key={item.category}
+              cx="80"
+              cy="80"
+              r={radius}
+              fill="transparent"
+              stroke={strokeColor}
+              strokeWidth={isSelected ? strokeWidth + 4 : strokeWidth}
+              strokeDasharray={circumference}
+              strokeDashoffset={strokeOffset}
+              transform={`rotate(${rotationAngle} 80 80)`}
+              className="transition-all duration-300 cursor-pointer hover:opacity-90 origin-center"
+              onClick={() => onSelect(item)}
+              style={{
+                filter: isSelected ? "drop-shadow(0px 2px 4px rgba(0,0,0,0.15))" : "none"
+              }}
+            />
+          );
+        })}
+      </svg>
+      {/* Center text content with nice details */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-20">
+        <span className="text-[9px] font-extrabold text-slate-400 uppercase tracking-widest">Porsi Makro</span>
+        <span className="text-2xl font-black text-slate-900 mt-0.5 leading-none">
+          {selectedItem.percentage}%
+        </span>
+        <span className="text-[10px] font-bold text-slate-500 mt-1">Rp {selectedItem.value}M</span>
+      </div>
+    </div>
+  );
+}
+
 export default function DashboardAPBD() {
   const [viewType, setViewType] = useState<"revenue" | "expenditure">("revenue");
   const [selectedCategory, setSelectedCategory] = useState<APBDItem>(
@@ -345,7 +427,7 @@ export default function DashboardAPBD() {
         {/* Right Detail Panel Column */}
         <div className="lg:col-span-5 space-y-6">
           <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-            <div className="flex items-center gap-2 border-b border-slate-100 pb-4">
+            <div className="flex items-center gap-2 border-b border-slate-100 pb-4 mb-4">
               <span className="p-2 rounded-xl bg-slate-100 text-slate-700">
                 <HelpCircle className="h-5 w-5" />
               </span>
@@ -355,7 +437,15 @@ export default function DashboardAPBD() {
               </div>
             </div>
 
-            <div className="mt-5 space-y-4">
+            {/* Interactive SVG Donut Chart */}
+            <DonutChart 
+              items={currentItems} 
+              selectedItem={selectedCategory} 
+              onSelect={setSelectedCategory} 
+              getProgressColor={getProgressColorClass} 
+            />
+
+            <div className="space-y-4">
               <p className="text-sm text-slate-600 leading-relaxed bg-slate-50/50 rounded-2xl p-4 border border-slate-100">
                 {selectedCategory.details}
               </p>
