@@ -137,10 +137,19 @@ export default function DashboardAPBD() {
   return (
     <div id="dashboard-apbd" className="space-y-8 animate-fade-in">
       {/* Intro Hero Section with Regional Branding */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-primary via-slate-900 to-slate-900 p-8 text-white shadow-xl">
-        <div className="absolute right-0 top-0 h-48 w-48 rounded-full bg-secondary/10 blur-3xl" />
-        <div className="absolute bottom-0 left-1/3 h-48 w-48 rounded-full bg-primary/20 blur-3xl" />
-        <div className="relative z-10 max-w-2xl">
+      <div className="relative overflow-hidden rounded-3xl bg-slate-900 text-white shadow-xl min-h-[220px] flex items-center">
+        {/* Background Image with elegant overlay */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="/src/assets/images/hero_pangkalpinang_bkd_1783308871752.jpg" 
+            alt="Kantor BKD Kota Pangkalpinang" 
+            className="w-full h-full object-cover object-center opacity-30 mix-blend-luminosity"
+            referrerPolicy="no-referrer"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/95 to-slate-950/80" />
+        </div>
+        
+        <div className="relative z-10 max-w-2xl p-8">
           <span className="font-mono text-xs font-bold tracking-widest text-secondary uppercase">
             Transparansi Anggaran Daerah
           </span>

@@ -122,39 +122,52 @@ export default function TaxSimulator() {
   return (
     <div id="tax-simulator" className="space-y-8 animate-fade-in print:p-0">
       {/* Header Banner */}
-      <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
-        <div className="flex items-center gap-4">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-accent text-primary shadow-sm">
-            <Calculator className="h-6 w-6" />
-          </div>
-          <div>
-            <h2 className="text-xl font-extrabold text-slate-900">Simulator Pajak Daerah</h2>
-            <p className="text-sm text-slate-500">Hitung perkiraan kewajiban Pajak PBB-P2 dan BPHTB secara mandiri dan transparan</p>
-          </div>
+      <div className="relative overflow-hidden rounded-3xl bg-slate-900 text-white shadow-xl min-h-[160px] flex items-center print:hidden">
+        {/* Background Image with elegant overlay */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="/src/assets/images/tax_workspace_1783308888481.jpg" 
+            alt="Simulasi Pajak Daerah" 
+            className="w-full h-full object-cover object-center opacity-25 mix-blend-luminosity"
+            referrerPolicy="no-referrer"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/95 to-slate-950/80" />
         </div>
+        
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between w-full p-6 md:p-8 gap-6">
+          <div className="flex items-center gap-4">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-secondary shadow-sm backdrop-blur-xs">
+              <Calculator className="h-6 w-6" />
+            </div>
+            <div>
+              <h2 className="text-xl font-extrabold text-white">Simulator Pajak Daerah</h2>
+              <p className="text-xs text-slate-300">Hitung perkiraan kewajiban Pajak PBB-P2 dan BPHTB secara mandiri dan transparan</p>
+            </div>
+          </div>
 
-        {/* Tax Type Toggle */}
-        <div className="inline-flex rounded-2xl bg-slate-100 p-1 self-start md:self-auto border border-slate-200/50">
-          <button
-            onClick={() => setActiveTaxType("pbb")}
-            className={`rounded-xl px-5 py-2 text-xs font-bold transition-all duration-200 ${
-              activeTaxType === "pbb"
-                ? "bg-primary text-white shadow-sm"
-                : "text-slate-600 hover:text-slate-900"
-            }`}
-          >
-            PBB-P2 Bumi & Bangunan
-          </button>
-          <button
-            onClick={() => setActiveTaxType("bphtb")}
-            className={`rounded-xl px-5 py-2 text-xs font-bold transition-all duration-200 ${
-              activeTaxType === "bphtb"
-                ? "bg-primary text-white shadow-sm"
-                : "text-slate-600 hover:text-slate-900"
-            }`}
-          >
-            BPHTB Transaksi Tanah/Bangunan
-          </button>
+          {/* Tax Type Toggle */}
+          <div className="inline-flex rounded-2xl bg-white/10 p-1 self-start md:self-auto border border-white/10 backdrop-blur-xs">
+            <button
+              onClick={() => setActiveTaxType("pbb")}
+              className={`rounded-xl px-5 py-2 text-xs font-bold transition-all duration-200 ${
+                activeTaxType === "pbb"
+                  ? "bg-secondary text-primary shadow-sm font-extrabold"
+                  : "text-slate-200 hover:text-white"
+              }`}
+            >
+              PBB-P2 Bumi & Bangunan
+            </button>
+            <button
+              onClick={() => setActiveTaxType("bphtb")}
+              className={`rounded-xl px-5 py-2 text-xs font-bold transition-all duration-200 ${
+                activeTaxType === "bphtb"
+                  ? "bg-secondary text-primary shadow-sm font-extrabold"
+                  : "text-slate-200 hover:text-white"
+              }`}
+            >
+              BPHTB Transaksi Tanah/Bangunan
+            </button>
+          </div>
         </div>
       </div>
 

@@ -120,6 +120,30 @@ export default function PublicServices() {
 
   return (
     <div id="public-services" className="space-y-8 animate-fade-in">
+      {/* Welcoming Public Service Banner */}
+      <div className="relative overflow-hidden rounded-3xl bg-slate-900 text-white shadow-xl min-h-[160px] flex items-center">
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="/src/assets/images/public_services_banner_1783308902483.jpg" 
+            alt="Pelayanan Publik BKD" 
+            className="w-full h-full object-cover object-center opacity-30 mix-blend-luminosity"
+            referrerPolicy="no-referrer"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/95 to-slate-950/80" />
+        </div>
+        <div className="relative z-10 p-6 md:p-8 max-w-2xl">
+          <span className="font-mono text-xs font-bold tracking-widest text-secondary uppercase">
+            Layanan Elektronik & Administrasi Pajak
+          </span>
+          <h2 className="mt-2 text-xl font-extrabold text-white leading-tight sm:text-2xl">
+            Pusat Pelayanan Publik BKD Kota Pangkalpinang
+          </h2>
+          <p className="mt-2 text-xs text-slate-300 leading-relaxed font-medium">
+            Periksa tagihan PBB-P2 Anda, unduh formulir administrasi resmi, dan pelajari berkas persyaratan pelayanan perpajakan daerah secara online, cepat, dan transparan.
+          </p>
+        </div>
+      </div>
+
       {/* 1. NOP Bill Checker Section */}
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
         {/* Checker Portal */}
