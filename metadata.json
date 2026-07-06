@@ -1,0 +1,6 @@
+{
+  "name": "Badan Keuangan Daerah Kota Pangkalpinang",
+  "description": "Portal Resmi Badan Keuangan Daerah Kota Pangkalpinang. Menyediakan informasi transparansi APBD, simulator pajak PBB/BPHTB, panduan layanan, dan asisten konsultasi keuangan daerah berbasis AI.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
